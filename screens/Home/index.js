@@ -323,7 +323,7 @@ const Home = () => {
       menu: [
         {
           menuId: 12,
-          name: 'Teh C Peng',
+          name: 'Eat well live long',
           photo: Images.noodleShop,
           description: 'Three Layer Teh C Peng',
           calories: 100,
@@ -331,7 +331,7 @@ const Home = () => {
         },
         {
           menuId: 13,
-          name: 'ABC Ice Kacang',
+          name: 'Eat Ice',
           photo: Images.pizza,
           description: 'Shaved Ice with red beans',
           calories: 100,
@@ -339,7 +339,7 @@ const Home = () => {
         },
         {
           menuId: 14,
-          name: 'Kek Lapis',
+          name: 'Pizza Inn',
           photo: Images.pizzaRestaurant,
           description: 'Layer cakes',
           calories: 300,
@@ -350,7 +350,7 @@ const Home = () => {
 
     {
       id: 7,
-      name: 'stomach doctor',
+      name: 'Food of Mombasa',
       rating: 4.8,
       categories: [8],
       priceRating: fairPrice,
@@ -377,7 +377,7 @@ const Home = () => {
     },
     {
       id: 8,
-      name: 'stomach doctor',
+      name: 'Stomach Doctor',
       rating: 4.8,
       categories: [8],
       priceRating: expensive,
@@ -404,7 +404,7 @@ const Home = () => {
     },
     {
       id: 9,
-      name: 'stomach doctor',
+      name: 'Live Once',
       rating: 4.8,
       categories: [8],
       priceRating: fairPrice,
@@ -421,11 +421,19 @@ const Home = () => {
       menu: [
         {
           menuId: 17,
-          name: 'Sushi sets',
+          name: 'Sun set',
           photo: Images.ChikenPizza,
           description: 'Fresh salmon, sushi rice, fresh juicy avocado',
           calories: 100,
           price: 50,
+        },
+        {
+          menuId: 18,
+          name: 'Sun set',
+          photo: Images.samsa,
+          description: 'Fresh samsa',
+          calories: 100,
+          price: 20,
         },
       ],
     },
@@ -446,13 +454,22 @@ const Home = () => {
     setRestaurants(restaurantList);
     setSelectedCategory(category);
   }
+  function getCategoriesNameById(id) {
+    let category = categories.filter((a) => a.id == id);
+    if (category.length > 0) {
+      return category[0].name;
+    }
+    return '';
+  }
   function HeaderTop() {
     return (
       <View
         style={{
           flexDirection: 'row',
           height: 40,
-          marginTop: 4,
+          marginTop: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
         <TouchableOpacity
           style={{
@@ -573,8 +590,11 @@ const Home = () => {
     const renderItem = ({item}) => (
       <TouchableOpacity
         style={{marginBottom: SIZES.padding * 2}}
-        onPress={() => console.log('move to the restaurant page with data')}>
-        <View>
+        onPress={() => console.log('57.06:', item)}>
+        <View
+          style={{
+            marginBottom: SIZES.padding,
+          }}>
           <Image
             source={item.photo}
             resizeMode="cover"
@@ -584,6 +604,72 @@ const Home = () => {
               borderRadius: SIZES.radius,
             }}
           />
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              height: 50,
+              width: SIZES.width * 0.2,
+              backgroundColor: COLORS.secondary,
+              borderTopRightRadius: SIZES.radius,
+              borderBottomLeftRadius: SIZES.radius,
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...styles.shadow,
+            }}>
+            <Text style={{...FONTS.body4}}>{item.duration}</Text>
+          </View>
+        </View>
+        <Text style={{...FONTS.body2}}>{item.name}</Text>
+        <View
+          style={{
+            marginTop: SIZES.padding,
+            flexDirection: 'row',
+          }}>
+          {/*rating*/}
+          <Image
+            source={Icons.Star}
+            resizeMde="contain"
+            style={{
+              width: 20,
+              height: 20,
+              tintColor: COLORS.primary,
+              marginRight: 10,
+            }}
+          />
+          <Text style={{...FONTS.body3}}>{item.rating}</Text>
+          {/*category*/}
+          <View
+            style={{
+              flexDirection: 'row',
+              marginLeft: 10,
+            }}>
+            {item.categories.map((categoryId) => {
+              return (
+                <View style={{flexDirection: 'row'}} key={categoryId}>
+                  <Text style={{...FONTS.body3}}>
+                    {getCategoriesNameById(categoryId)}
+                  </Text>
+                  <Text style={{...FONTS.h1, color: COLORS.darkgrey}}>.</Text>
+                </View>
+              );
+            })}
+            {/*price*/}
+            {[1, 2, 3].map((priceRating) => (
+              <Text
+                key={priceRating}
+                style={{
+                  ...FONTS.body3,
+                  flexDirection: 'column',
+                  color:
+                    priceRating <= item.priceRating
+                      ? COLORS.black
+                      : COLORS.primary1,
+                }}>
+                $
+              </Text>
+            ))}
+          </View>
         </View>
       </TouchableOpacity>
     );
