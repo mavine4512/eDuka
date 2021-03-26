@@ -22,7 +22,7 @@ const Restaurant = ({route, navigation}) => {
   }, [route.params]);
 
   function HeaderTop() {
-    console.log('restaurant', Restaurant);
+    console.log('restaurant', restaurant);
     return (
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
@@ -58,6 +58,7 @@ const Restaurant = ({route, navigation}) => {
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.lightgrey3,
             }}>
+            {/*optional parameter .name can be null*/}
             <Text style={{...FONTS.h3}}>{restaurant?.name}</Text>
           </View>
         </View>
