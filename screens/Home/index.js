@@ -36,7 +36,7 @@ import {
   tomatoPasta,
 } from '../../constants/images';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const initialCurrentLocation = {
     streetName: 'Nairobi',
     gps: {
@@ -590,7 +590,10 @@ const Home = () => {
     const renderItem = ({item}) => (
       <TouchableOpacity
         style={{marginBottom: SIZES.padding * 2}}
-        onPress={() => console.log('57.06:', item)}>
+        onPress={() => navigation.navigate('Restaurant',(
+          item,
+            currentLocation
+        ))}>
         <View
           style={{
             marginBottom: SIZES.padding,

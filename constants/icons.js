@@ -7,6 +7,7 @@ export const StarFull = require('../assets/icons/star_full.png');
 export const like = require('../assets/icons/like.png');
 export const list = require('../assets/icons/list.png');
 export const BackIcon = require('../assets/icons/back.png');
+export const Back_Icon = require('../assets/icons/back_icon.png');
 export const Car = require('../assets/icons/car.png');
 export const Cutlery = require('../assets/icons/cutlery.png');
 export const Donut = require('../assets/icons/donut.png');
@@ -42,6 +43,7 @@ export default {
   list,
   StarFull,
   BackIcon,
+  Back_Icon,
   Car,
   Cutlery,
   Donut,
