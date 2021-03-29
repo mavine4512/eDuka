@@ -603,7 +603,7 @@ const Home = ({navigation}) => {
             style={{
               width: '100%',
               height: 200,
-              borderRadius: SIZES.radius,
+              borderRadius: SIZES.padding,
             }}
           />
           <View
@@ -614,7 +614,7 @@ const Home = ({navigation}) => {
               width: SIZES.width * 0.2,
               backgroundColor: COLORS.secondary,
               borderTopRightRadius: SIZES.radius,
-              borderBottomLeftRadius: SIZES.radius,
+              borderBottomLeftRadius: SIZES.padding,
               justifyContent: 'center',
               alignItems: 'center',
               ...styles.shadow,
@@ -652,7 +652,7 @@ const Home = ({navigation}) => {
                   <Text style={{...FONTS.body3}}>
                     {getCategoriesNameById(categoryId)}
                   </Text>
-                  <Text style={{...FONTS.h1, color: COLORS.darkgrey}}>.</Text>
+                  <Text style={{...FONTS.h1, color: COLORS.darkgrey}}> </Text>
                 </View>
               );
             })}
