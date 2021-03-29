@@ -36,7 +36,7 @@ import {
   tomatoPasta,
 } from '../../constants/images';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const initialCurrentLocation = {
     streetName: 'Nairobi',
     gps: {
@@ -590,7 +590,9 @@ const Home = () => {
     const renderItem = ({item}) => (
       <TouchableOpacity
         style={{marginBottom: SIZES.padding * 2}}
-        onPress={() => console.log('57.06:', item)}>
+        onPress={() =>
+          navigation.navigate('Restaurant', {item, currentLocation})
+        }>
         <View
           style={{
             marginBottom: SIZES.padding,
@@ -601,7 +603,7 @@ const Home = () => {
             style={{
               width: '100%',
               height: 200,
-              borderRadius: SIZES.radius,
+              borderRadius: SIZES.padding,
             }}
           />
           <View
@@ -612,7 +614,7 @@ const Home = () => {
               width: SIZES.width * 0.2,
               backgroundColor: COLORS.secondary,
               borderTopRightRadius: SIZES.radius,
-              borderBottomLeftRadius: SIZES.radius,
+              borderBottomLeftRadius: SIZES.padding,
               justifyContent: 'center',
               alignItems: 'center',
               ...styles.shadow,
@@ -650,7 +652,7 @@ const Home = () => {
                   <Text style={{...FONTS.body3}}>
                     {getCategoriesNameById(categoryId)}
                   </Text>
-                  <Text style={{...FONTS.h1, color: COLORS.darkgrey}}>.</Text>
+                  <Text style={{...FONTS.h1, color: COLORS.darkgrey}}> </Text>
                 </View>
               );
             })}
