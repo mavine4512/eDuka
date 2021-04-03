@@ -18,7 +18,6 @@ export const Hamburger = require('../assets/icons/hamburger.png');
 export const Hotdog = require('../assets/icons/hotdog.png');
 export const List = require('../assets/icons/list.png');
 export const Like = require('../assets/icons/like.png');
-export const Nearby = require('../assets/icons/nearby.png');
 export const Location = require('../assets/icons/location.png');
 export const Mastercard = require('../assets/icons/mastercard.png');
 export const Noodle = require('../assets/icons/noodle.png');
@@ -28,7 +27,6 @@ export const RedPin = require('../assets/icons/red-pin.png');
 export const RiceBowl = require('../assets/icons/rice-bowl.png');
 export const Salad = require('../assets/icons/salad.png');
 export const Search = require('../assets/icons/search.png');
-export const ShoppingBasket = require('../assets/icons/shopping-basket.png');
 export const Star = require('../assets/icons/star.png');
 export const Sushi = require('../assets/icons/sushi.png');
 export const user = require('../assets/icons/user.png');
@@ -55,7 +53,7 @@ export default {
   List,
   Like,
   Location,
-  Nearby,
+
   Mastercard,
   Noodle,
   Pin,
@@ -64,7 +62,7 @@ export default {
   RiceBowl,
   Salad,
   Search,
-  ShoppingBasket,
+
   Star,
   Sushi,
   user,
