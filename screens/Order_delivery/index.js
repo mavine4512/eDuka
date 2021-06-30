@@ -4,7 +4,7 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import {GOOGLE_API_KEY, COLORS, FONTS, SIZES, Icons} from '../../constants';
 import Icon from '../../constants/global/icon';
-import {RedPin} from '../../constants/icons';
+// import {RedPin} from '../../constants/icons';
 
 const OrderDelivery = ({route, navigation}) => {
   const mapView = React.useRef();
@@ -38,7 +38,7 @@ const OrderDelivery = ({route, navigation}) => {
     setFromLocation(fromLoc);
     setToLocation(toLoc);
     setRegion(mapRegion);
-  }, []);
+  }, [route.params]);
 
   function calculateAngle(coordinates) {
     let startLat = coordinates[0].latitude;
@@ -49,6 +49,30 @@ const OrderDelivery = ({route, navigation}) => {
     let dy = endLng - startLng;
 
     return (Math.atan2(dy, dx) * 180) / Math.PI;
+  }
+
+  function zoomIn() {
+    let newRegion = {
+      latitude: region.latitude,
+      longitude: region.longitude,
+      latitudeDelta: region.latitudeDelta / 2,
+      longitudeDelta: region.longitudeDelta / 2,
+    };
+
+    setRegion(newRegion);
+    mapView.current.animateToRegion(newRegion, 200);
+  }
+
+  function zoomOut() {
+    let newRegion = {
+      latitude: region.latitude,
+      longitude: region.longitude,
+      latitudeDelta: region.latitudeDelta * 2,
+      longitudeDelta: region.longitudeDelta * 2,
+    };
+
+    setRegion(newRegion);
+    mapView.current.animateToRegion(newRegion, 200);
   }
 
   function destinationHeader() {
@@ -100,7 +124,6 @@ const OrderDelivery = ({route, navigation}) => {
           bottom: 50,
           left: 0,
           right: 0,
-          height: 50,
           alignItems: 'center',
           justifyContent: 'center',
         }}>
@@ -113,6 +136,7 @@ const OrderDelivery = ({route, navigation}) => {
             backgroundColor: COLORS.white,
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {/* Avatar */}
             <Image
               source={restaurant?.courier.avatar}
               style={{
@@ -121,16 +145,15 @@ const OrderDelivery = ({route, navigation}) => {
                 borderRadius: 25,
               }}
             />
+
             <View style={{flex: 1, marginLeft: SIZES.padding}}>
               {/* Name & Rating */}
               <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={{...FONTS.h4}}>{restaurant?.courier.name}</Text>
-
                 <View style={{flexDirection: 'row'}}>
                   <Image
-                    source={Icons.Star}
-                    {}
+                    source={Icons.star}
                     style={{
                       width: 18,
                       height: 18,
@@ -141,44 +164,47 @@ const OrderDelivery = ({route, navigation}) => {
                   <Text style={{...FONTS.body3}}>{restaurant?.rating}</Text>
                 </View>
               </View>
+
+              {/* Restaurant */}
               <Text style={{color: COLORS.darkgray, ...FONTS.body4}}>
                 {restaurant?.name}
               </Text>
             </View>
+          </View>
 
-            <View
+          {/* Buttons */}
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: SIZES.padding * 2,
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity
               style={{
-                flexDirection: 'row',
-                marginTop: SIZES.padding * 2,
-                justifyContent: 'space-between',
-              }}>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  height: 50,
-                  marginRight: 10,
-                  backgroundColor: COLORS.primary,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                }}
-                onPress={() => navigation.navigate('Home')}>
-                <Text style={{...FONTS.h4, color: COLORS.white}}>Call</Text>
-              </TouchableOpacity>
+                flex: 1,
+                height: 50,
+                marginRight: 10,
+                backgroundColor: COLORS.primary,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => navigation.navigate('Home')}>
+              <Text style={{...FONTS.h4, color: COLORS.white}}>Call</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  height: 50,
-                  backgroundColor: COLORS.secondary,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                }}
-                onPress={() => navigation.goBack()}>
-                <Text style={{...FONTS.h4, color: COLORS.white}}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                height: 50,
+                backgroundColor: COLORS.secondary,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => navigation.goBack()}>
+              <Text style={{...FONTS.h4, color: COLORS.white}}>Cancel</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -216,14 +242,6 @@ const OrderDelivery = ({route, navigation}) => {
                 color: COLORS.white,
               }}
             />
-            {/*<Image*/}
-            {/*  source={Icons.Pin}*/}
-            {/*  style={{*/}
-            {/*    width: 25,*/}
-            {/*    height: 25,*/}
-            {/*    tintColor: COLORS.white,*/}
-            {/*  }}*/}
-            {/*/>*/}
           </View>
         </View>
       </Marker>
@@ -296,11 +314,55 @@ const OrderDelivery = ({route, navigation}) => {
       </View>
     );
   }
+
+  function renderButtons() {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          bottom: SIZES.height * 0.35,
+          right: SIZES.padding * 2,
+          width: 60,
+          height: 130,
+          justifyContent: 'space-between',
+        }}>
+        {/* Zoom In */}
+        <TouchableOpacity
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={() => zoomIn()}>
+          <Text style={{...FONTS.body1}}>+</Text>
+        </TouchableOpacity>
+
+        {/* Zoom Out */}
+        <TouchableOpacity
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={() => zoomOut()}>
+          <Text style={{...FONTS.body1}}>-</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <View style={{flex: 1}}>
       {map()}
       {destinationHeader()}
       {deliveryInfo()}
+      {renderButtons()}
     </View>
   );
 };

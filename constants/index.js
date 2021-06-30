@@ -5,4 +5,3 @@ import GOOGLE_API_KEY from './maps';
 
 export {Images, COLORS, SIZES, FONTS, Icons, GOOGLE_API_KEY};
 
-// 15:09
