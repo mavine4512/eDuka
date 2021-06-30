@@ -22,7 +22,7 @@ const Restaurant = ({route, navigation}) => {
     let {item, currentLocation} = route.params;
     setRestaurant(item);
     setCurrentLocation(currentLocation);
-  }, [route.params]);
+  }, []);
 
   function editOrder(action, menuId, price) {
     let orderList = orderItems.slice();
@@ -46,6 +46,7 @@ const Restaurant = ({route, navigation}) => {
     } else {
       if (item.length > 0) {
         if (item[0]?.qty > 0) {
+          // issue
           let newQty = item[0].qty - 1;
           item[0].qty = newQty;
           item[0].total = newQty + price;
@@ -153,6 +154,7 @@ const Restaurant = ({route, navigation}) => {
     );
   }
   function foodDetails() {
+    // console.log('data :',restaurant)
     return (
       <Animated.ScrollView
         horizontal
@@ -165,7 +167,7 @@ const Restaurant = ({route, navigation}) => {
           {useNativeDriver: false},
         )}>
         {restaurant?.menu.map((item, index) => (
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center'}} key={item.calories}>
             <View style={{height: SIZES.height * 0.29}}>
               <Image
                 source={item.photo}
@@ -270,6 +272,7 @@ const Restaurant = ({route, navigation}) => {
       </Animated.ScrollView>
     );
   }
+
   function dotsOnTop() {
     const dotPosition = Animated.divide(scrollX, SIZES.width);
     return (
@@ -346,7 +349,7 @@ const Restaurant = ({route, navigation}) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               paddingHorizontal: SIZES.padding * 2,
-              paddingVertical: SIZES.padding * 2,
+              paddingVertical: SIZES.padding * 0.5,
             }}>
             <View
               style={{
@@ -419,7 +422,7 @@ const Restaurant = ({route, navigation}) => {
                   currentLocation: currentLocation,
                 })
               }>
-              <Text style={{...FONTS.h2, color: COLORS.white}}>Make Order</Text>
+              <Text style={{...FONTS.h3, color: COLORS.white}}>Make Order</Text>
             </TouchableOpacity>
           </View>
         </View>

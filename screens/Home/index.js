@@ -131,7 +131,7 @@ const Home = ({navigation}) => {
       photo: Images.crispyChickenBurger,
       duration: '15 - 20 min',
       location: {
-        latitude: -1.288430,
+        latitude: -1.28843,
         longitude: 36.791731,
       },
       courier: {
@@ -183,8 +183,8 @@ const Home = ({navigation}) => {
       photo: Images.sarawakLaksa,
       duration: '20 - 25 min',
       location: {
-        latitude: -1.254230,
-        longitude:36.793588,
+        latitude: -1.25423,
+        longitude: 36.793588,
       },
       courier: {
         avatar: Images.avatar3,
@@ -237,8 +237,8 @@ const Home = ({navigation}) => {
       photo: Images.japaneseRestaurant,
       duration: '15 - 20 min',
       location: {
-        latitude: -1.285790,
-        longitude: 36.820030,
+        latitude: -1.28579,
+        longitude: 36.82003,
       },
       courier: {
         avatar: Images.avatar4,
@@ -463,7 +463,6 @@ const Home = ({navigation}) => {
               fontSize: 30,
             }}
           />
-
         </TouchableOpacity>
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View
@@ -500,7 +499,9 @@ const Home = ({navigation}) => {
   }
 
   function mainCategories() {
+
     const renderItems = ({item}) => {
+
       return (
         <TouchableOpacity
           style={{
@@ -627,6 +628,7 @@ const Home = ({navigation}) => {
               marginLeft: 10,
             }}>
             {item.categories.map((categoryId) => {
+
               return (
                 <View style={{flexDirection: 'row'}} key={categoryId}>
                   <Text style={{...FONTS.body3}}>
