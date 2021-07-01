@@ -2,15 +2,8 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-
-import {
-  COLORS,
-  FONTS,
-  icons,
-  SIZES,
-  GOOGLE_API_KEY,
-  Icons,
-} from '../../constants';
+import {GOOGLE_API_KEY, COLORS, FONTS, SIZES, Icons} from '../../constants';
+import Icon from '../../constants/global/icon';
 
 const OrderDelivery = ({route, navigation}) => {
   const mapView = React.useRef();
@@ -21,10 +14,11 @@ const OrderDelivery = ({route, navigation}) => {
   const [toLocation, setToLocation] = React.useState(null);
   const [region, setRegion] = React.useState(null);
 
+  const [angle, setAngle] = React.useState(0);
   const [duration, setDuration] = React.useState(0);
   const [isReady, setIsReady] = React.useState(false);
-  const [angle, setAngle] = React.useState(0);
 
+  //component did mount
   React.useEffect(() => {
     let {restaurant, currentLocation} = route.params;
 
@@ -38,13 +32,12 @@ const OrderDelivery = ({route, navigation}) => {
       latitudeDelta: Math.abs(fromLoc.latitude - toLoc.latitude) * 2,
       longitudeDelta: Math.abs(fromLoc.longitude - toLoc.longitude) * 2,
     };
-
     setRestaurant(restaurant);
     setStreetName(street);
     setFromLocation(fromLoc);
     setToLocation(toLoc);
     setRegion(mapRegion);
-  }, []);
+  }, [route.params]);
 
   function calculateAngle(coordinates) {
     let startLat = coordinates[0].latitude;
@@ -81,113 +74,12 @@ const OrderDelivery = ({route, navigation}) => {
     mapView.current.animateToRegion(newRegion, 200);
   }
 
-  function renderMap() {
-    const destinationMarker = () => (
-      <Marker coordinate={toLocation}>
-        <View
-          style={{
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: COLORS.white,
-          }}>
-          <View
-            style={{
-              height: 30,
-              width: 30,
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: COLORS.primary,
-            }}>
-            <Image
-              source={Icons.Pin}
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: COLORS.white,
-              }}
-            />
-          </View>
-        </View>
-      </Marker>
-    );
-
-    const carIcon = () => (
-      <Marker
-        coordinate={fromLocation}
-        anchor={{x: 0.5, y: 0.5}}
-        flat={true}
-        rotation={angle}>
-        <Image
-          source={Icons.Car}
-          style={{
-            width: 40,
-            height: 40,
-          }}
-        />
-      </Marker>
-    );
-
-    return (
-      <View style={{flex: 1}}>
-        <MapView
-          ref={mapView}
-          provider={PROVIDER_GOOGLE}
-          initialRegion={region}
-          style={{flex: 1}}>
-          <MapViewDirections
-            origin={fromLocation}
-            destination={toLocation}
-            apikey={GOOGLE_API_KEY}
-            strokeWidth={5}
-            strokeColor={COLORS.primary}
-            optimizeWaypoints={true}
-            onReady={(result) => {
-              setDuration(result.duration);
-
-              if (!isReady) {
-                // Fit route into maps
-                mapView.current.fitToCoordinates(result.coordinates, {
-                  edgePadding: {
-                    right: SIZES.width / 20,
-                    bottom: SIZES.height / 4,
-                    left: SIZES.width / 20,
-                    top: SIZES.height / 8,
-                  },
-                });
-
-                // Reposition the car
-                let nextLoc = {
-                  latitude: result.coordinates[0].latitude,
-                  longitude: result.coordinates[0].longitude,
-                };
-
-                if (result.coordinates.length >= 2) {
-                  let angle = calculateAngle(result.coordinates);
-                  setAngle(angle);
-                }
-
-                setFromLocation(nextLoc);
-                setIsReady(true);
-              }
-            }}
-          />
-          {destinationMarker()}
-          {carIcon()}
-        </MapView>
-      </View>
-    );
-  }
-
-  function renderDestinationHeader() {
+  function destinationHeader() {
     return (
       <View
         style={{
           position: 'absolute',
-          top: 50,
+          top: 20,
           left: 0,
           right: 0,
           height: 50,
@@ -198,7 +90,7 @@ const OrderDelivery = ({route, navigation}) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            width: SIZES.width * 0.9,
+            width: SIZES.width * 0.8,
             paddingVertical: SIZES.padding,
             paddingHorizontal: SIZES.padding * 2,
             borderRadius: SIZES.radius,
@@ -223,7 +115,7 @@ const OrderDelivery = ({route, navigation}) => {
     );
   }
 
-  function renderDeliveryInfo() {
+  function deliveryInfo() {
     return (
       <View
         style={{
@@ -260,7 +152,7 @@ const OrderDelivery = ({route, navigation}) => {
                 <Text style={{...FONTS.h4}}>{restaurant?.courier.name}</Text>
                 <View style={{flexDirection: 'row'}}>
                   <Image
-                    source={Icons.Star}
+                    source={Icons.star}
                     style={{
                       width: 18,
                       height: 18,
@@ -318,6 +210,107 @@ const OrderDelivery = ({route, navigation}) => {
     );
   }
 
+  function map() {
+    const destinationMarker = () => (
+      <Marker coordinate={toLocation}>
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            backgroundColor: COLORS.white,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: COLORS.primary,
+            }}>
+            <Image
+              source={Icons.Pin}
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: COLORS.white,
+              }}
+            />
+          </View>
+        </View>
+      </Marker>
+    );
+
+    const carIcon = () => (
+      <Marker
+        coordinate={fromLocation}
+        anchor={{x: 0.5, y: 0.5}}
+        flat={true}
+        rotation={angle}>
+        <Image
+          source={Icons.Car}
+          style={{
+            width: 40,
+            height: 40,
+          }}
+        />
+      </Marker>
+    );
+
+    return (
+      <View style={{flex: 1}}>
+        <MapView
+          ref={mapView}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={region}
+          style={{flex: 1}}>
+          <MapViewDirections
+            destination={toLocation}
+            origin={fromLocation}
+            strokeWidth={2}
+            apikey={GOOGLE_API_KEY}
+            strokeColor={COLORS.primary}
+            optimizeWaypoints={true}
+            onReady={(result) => {
+              setDuration(result.duration);
+
+              if (!isReady) {
+                // Fit route into maps
+                mapView.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    right: SIZES.width / 20,
+                    bottom: SIZES.height / 4,
+                    left: SIZES.width / 20,
+                    top: SIZES.height / 8,
+                  },
+                });
+
+                // Reposition the car
+                let nextLoc = {
+                  latitude: result.coordinates[0].latitude,
+                  longitude: result.coordinates[0].longitude,
+                };
+
+                if (result.coordinates.length >= 2) {
+                  let angle = calculateAngle(result.coordinates);
+                  setAngle(angle);
+                }
+
+                setFromLocation(nextLoc);
+                setIsReady(true);
+              }
+            }}
+          />
+          {destinationMarker()}
+          {carIcon()}
+        </MapView>
+      </View>
+    );
+  }
+
   function renderButtons() {
     return (
       <View
@@ -362,9 +355,9 @@ const OrderDelivery = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      {renderMap()}
-      {renderDestinationHeader()}
-      {renderDeliveryInfo()}
+      {map()}
+      {destinationHeader()}
+      {deliveryInfo()}
       {renderButtons()}
     </View>
   );

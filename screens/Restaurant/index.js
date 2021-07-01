@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {COLORS, FONTS, SIZES, Icons} from '../../constants';
+import Icon from '../../constants/global/icon';
 
 const Restaurant = ({route, navigation}) => {
   const scrollX = new Animated.Value(0);
@@ -21,7 +22,7 @@ const Restaurant = ({route, navigation}) => {
     let {item, currentLocation} = route.params;
     setRestaurant(item);
     setCurrentLocation(currentLocation);
-  }, [route.params]);
+  }, []);
 
   function editOrder(action, menuId, price) {
     let orderList = orderItems.slice();
@@ -45,6 +46,7 @@ const Restaurant = ({route, navigation}) => {
     } else {
       if (item.length > 0) {
         if (item[0]?.qty > 0) {
+          // issue
           let newQty = item[0].qty - 1;
           item[0].qty = newQty;
           item[0].total = newQty + price;
@@ -83,14 +85,23 @@ const Restaurant = ({route, navigation}) => {
             justifyContent: 'center',
           }}
           onPress={() => navigation.goBack()}>
-          <Image
-            source={Icons.Back_Icon}
-            resizeMode="contain"
+          <Icon
+            name={'chevron-back'}
+            type={'Ionicons'}
             style={{
-              width: 30,
-              height: 30,
+              width: 40,
+              height: 40,
+              fontSize: 30,
             }}
           />
+          {/*<Image*/}
+          {/*  source={Icons.Back_Icon}*/}
+          {/*  resizeMode="contain"*/}
+          {/*  style={{*/}
+          {/*    width: 30,*/}
+          {/*    height: 30,*/}
+          {/*  }}*/}
+          {/*/>*/}
         </TouchableOpacity>
 
         {/* Restaurant Name Section */}
@@ -108,6 +119,7 @@ const Restaurant = ({route, navigation}) => {
               paddingHorizontal: SIZES.padding * 3,
               borderRadius: SIZES.radius,
               backgroundColor: COLORS.lightgrey3,
+              marginBottom: 10,
             }}>
             {/*optional parameter .name can be null*/}
             <Text style={{...FONTS.h3}}>{restaurant?.name}</Text>
@@ -120,19 +132,29 @@ const Restaurant = ({route, navigation}) => {
             paddingRight: SIZES.padding * 2,
             justifyContent: 'center',
           }}>
-          <Image
-            source={Icons.List}
-            resizeMode="contain"
+          <Icon
+            name={'format-list-bulleted'}
+            type={'MaterialCommunityIcons'}
             style={{
-              width: 30,
-              height: 30,
+              width: 40,
+              height: 40,
+              fontSize: 30,
             }}
           />
+          {/*<Image*/}
+          {/*  source={Icons.List}*/}
+          {/*  resizeMode="contain"*/}
+          {/*  style={{*/}
+          {/*    width: 30,*/}
+          {/*    height: 30,*/}
+          {/*  }}*/}
+          {/*/>*/}
         </TouchableOpacity>
       </View>
     );
   }
   function foodDetails() {
+    // console.log('data :',restaurant)
     return (
       <Animated.ScrollView
         horizontal
@@ -145,7 +167,7 @@ const Restaurant = ({route, navigation}) => {
           {useNativeDriver: false},
         )}>
         {restaurant?.menu.map((item, index) => (
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center'}} key={item.calories}>
             <View style={{height: SIZES.height * 0.29}}>
               <Image
                 source={item.photo}
@@ -250,6 +272,7 @@ const Restaurant = ({route, navigation}) => {
       </Animated.ScrollView>
     );
   }
+
   function dotsOnTop() {
     const dotPosition = Animated.divide(scrollX, SIZES.width);
     return (
@@ -325,22 +348,32 @@ const Restaurant = ({route, navigation}) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              paddingHorizontal: SIZES.padding * 2.5,
-              paddingVertical: SIZES.padding * 2,
+              paddingHorizontal: SIZES.padding * 2,
+              paddingVertical: SIZES.padding * 0.5,
             }}>
             <View
               style={{
                 flexDirection: 'row',
               }}>
-              <Image
-                source={Icons.Pin}
-                resizeMode="contain"
+              <Icon
+                name={'location-sharp'}
+                type={'Ionicons'}
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor: COLORS.darkgrey,
+                  fontSize: 20,
+                  color: COLORS.darkgrey,
                 }}
               />
+              {/*<Image*/}
+              {/*  source={Icons.Pin}*/}
+              {/*  resizeMode="contain"*/}
+              {/*  style={{*/}
+              {/*    width: 20,*/}
+              {/*    height: 20,*/}
+              {/*    tintColor: COLORS.darkgrey,*/}
+              {/*  }}*/}
+              {/*/>*/}
               <Text
                 style={{
                   marginLeft: SIZES.padding,
@@ -389,7 +422,7 @@ const Restaurant = ({route, navigation}) => {
                   currentLocation: currentLocation,
                 })
               }>
-              <Text style={{...FONTS.h2, color: COLORS.white}}>Make Order</Text>
+              <Text style={{...FONTS.h3, color: COLORS.white}}>Make Order</Text>
             </TouchableOpacity>
           </View>
         </View>
