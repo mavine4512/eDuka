@@ -9,39 +9,14 @@ import {
 } from 'react-native';
 import {COLORS, FONTS, SIZES, Images, Icons} from '../../constants';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {
-  bakedFries,
-  burgerRestaurant,
-  burgerRestaurant2,
-  chicagoHotDog,
-  ChikenPizza,
-  crispyChickenBurger,
-  friesRestaurant,
-  hawaiianPizza,
-  honeyMustardChickenBurger,
-  HotDogRestaurant,
-  iceKacang,
-  japaneseRestaurant,
-  kekLapis,
-  kekLapisShop,
-  koloMee,
-  nasiBriyaniMutton,
-  nasiLemak,
-  noodleShop,
-  pizza,
-  pizzaRestaurant,
-  sarawakLaksa,
-  sushi,
-  tehCPeng,
-  tomatoPasta,
-} from '../../constants/images';
+import Icon from '../../constants/global/icon';
 
 const Home = ({navigation}) => {
   const initialCurrentLocation = {
     streetName: 'Nairobi',
     gps: {
-      latitude: 1.2659896295332462,
-      longitude: 36.910320886223715,
+      latitude: -1.384143,
+      longitude: 36.896296,
     },
   };
 
@@ -113,8 +88,8 @@ const Home = ({navigation}) => {
       photo: Images.bakedFries,
       duration: '30 - 45 min',
       location: {
-        latitude: 1.2659896295332462,
-        longitude: 31.35632207358996,
+        latitude: -1.289819,
+        longitude: 36.800451,
       },
       courier: {
         avatar: Images.avatar3,
@@ -156,8 +131,8 @@ const Home = ({navigation}) => {
       photo: Images.crispyChickenBurger,
       duration: '15 - 20 min',
       location: {
-        latitude: 1.556306570595712,
-        longitude: 110.35504616746915,
+        latitude: -1.28843,
+        longitude: 36.791731,
       },
       courier: {
         avatar: Images.avatar1,
@@ -208,8 +183,8 @@ const Home = ({navigation}) => {
       photo: Images.sarawakLaksa,
       duration: '20 - 25 min',
       location: {
-        latitude: 1.5238753474714375,
-        longitude: 110.34261833833622,
+        latitude: -1.25423,
+        longitude: 36.793588,
       },
       courier: {
         avatar: Images.avatar3,
@@ -235,8 +210,8 @@ const Home = ({navigation}) => {
       photo: Images.sushi,
       duration: '10 - 15 min',
       location: {
-        latitude: 1.5578068150528928,
-        longitude: 110.35482523764315,
+        latitude: -1.254315,
+        longitude: 36.794569,
       },
       courier: {
         avatar: Images.avatar3,
@@ -262,8 +237,8 @@ const Home = ({navigation}) => {
       photo: Images.japaneseRestaurant,
       duration: '15 - 20 min',
       location: {
-        latitude: 1.558050496260768,
-        longitude: 110.34743759630511,
+        latitude: -1.28579,
+        longitude: 36.82003,
       },
       courier: {
         avatar: Images.avatar4,
@@ -313,8 +288,8 @@ const Home = ({navigation}) => {
       photo: Images.nasiBriyaniMutton,
       duration: '35 - 40 min',
       location: {
-        latitude: 1.5573478487252896,
-        longitude: 110.35568783282145,
+        latitude: -1.275993,
+        longitude: 36.820193,
       },
       courier: {
         avatar: Images.avatar5,
@@ -357,8 +332,8 @@ const Home = ({navigation}) => {
       photo: Images.tehCPeng,
       duration: '10 - 15 min',
       location: {
-        latitude: 1.5578068150528928,
-        longitude: 110.35482523764315,
+        latitude: -1.269761,
+        longitude: 36.774253,
       },
       courier: {
         avatar: Images.avatar3,
@@ -384,8 +359,8 @@ const Home = ({navigation}) => {
       photo: Images.tomatoPasta,
       duration: '10 - 15 min',
       location: {
-        latitude: 1.5578068150528928,
-        longitude: 110.35482523764315,
+        latitude: -1.270973,
+        longitude: 36.770161,
       },
       courier: {
         avatar: Images.avatar3,
@@ -473,17 +448,19 @@ const Home = ({navigation}) => {
         }}>
         <TouchableOpacity
           style={{
-            width: 50,
+            // width: 50,
             paddingLeft: SIZES.padding * 2,
             justifyContent: 'center',
             marginTop: 5,
+            marginLeft: 5,
           }}>
-          <Image
-            source={Icons.Nearby}
-            resizeMode="contain"
+          <Icon
+            name={'map-marker-radius-outline'}
+            type={'MaterialCommunityIcons'}
             style={{
-              width: 30,
-              height: 30,
+              width: 40,
+              height: 40,
+              fontSize: 30,
             }}
           />
         </TouchableOpacity>
@@ -505,13 +482,15 @@ const Home = ({navigation}) => {
             width: 50,
             paddingRight: SIZES.padding * 2,
             justifyContent: 'center',
+            marginRight: 5,
           }}>
-          <Image
-            source={Icons.ShoppingBasket}
-            resizeMde="contain"
+          <Icon
+            name={'shopping-cart'}
+            type={'FontAwesome'}
             style={{
               width: 30,
               height: 30,
+              fontSize: 30,
             }}
           />
         </TouchableOpacity>
@@ -520,7 +499,9 @@ const Home = ({navigation}) => {
   }
 
   function mainCategories() {
+
     const renderItems = ({item}) => {
+
       return (
         <TouchableOpacity
           style={{
@@ -647,6 +628,7 @@ const Home = ({navigation}) => {
               marginLeft: 10,
             }}>
             {item.categories.map((categoryId) => {
+
               return (
                 <View style={{flexDirection: 'row'}} key={categoryId}>
                   <Text style={{...FONTS.body3}}>
